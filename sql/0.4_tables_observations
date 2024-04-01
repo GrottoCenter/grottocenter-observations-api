@@ -1,0 +1,54 @@
+\c grottoobs;
+
+CREATE TABLE public.t_observations (
+    id serial NOT NULL,
+    title character varying(100) NOT NULL,
+    id_author int4 NOT NULL,
+	id_reviewer int4 NULL,
+    date_inscription timestamp NOT NULL DEFAULT now(),
+	date_reviewed timestamp NULL,
+    is_deleted bool NOT NULL DEFAULT false,
+	redirect_to int4 NULL,
+    id_cave int4,
+    id_entrance int4,
+    id_point int4,
+    id_observation-type int4
+);
+
+ALTER TABLE ONLY public.t_observations
+    ADD CONSTRAINT t_observations_pkey PRIMARY KEY (id);
+
+CREATE TABLE public.h_observations (
+    id serial NOT NULL,
+    title character varying(100) NOT NULL,
+    id_author int4 NOT NULL,
+	id_reviewer int4 NULL,
+    date_inscription timestamp NOT NULL DEFAULT now(),
+	date_reviewed timestamp NULL,
+    id_cave int4,
+    id_entrance int4,
+    id_point int4,
+    id_observations_types int4
+);
+
+ALTER TABLE ONLY public.h_observations
+    ADD CONSTRAINT h_observations_pkey PRIMARY KEY (id);
+
+
+CREATE TABLE public.t_observations_types (
+    id serial NOT NULL,
+    title character varying(100) NOT NULL,
+    definition text,
+    url character varying(100)
+);
+    
+ALTER TABLE ONLY public.t_observations_types
+    ADD CONSTRAINT t_observations_types_pkey PRIMARY KEY (id);
+
+INSERT INTO public.t_observations_types (id, title, definition, url) VALUES
+(1,'survey','Representation of the underground cavity made from measurements','https://ontology.uis-speleo.org/ontology/#survey'),
+(2,'pollution','Observation of substances or interventions having an impact on the site','https://ontology.uis-speleo.org/ontology/#pollution'),
+(3,'physical mesurements','Action of describing the human activities that can be carried out in an underground cavity','http://www.w3.org/ns/sosa/Observation'),
+(4,'biospeleological observation','An existence of an Organism at a particular place at a particular time.','https://dwc.tdwg.org/list/#dwc_Occurrence'),
+(5,'human activities','Using the underground cavity to store something','https://ontology.uis-speleo.org/ontology/#humanActivities');
+
