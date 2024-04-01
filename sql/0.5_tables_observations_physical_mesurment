@@ -1,0 +1,22 @@
+\c grottoobs;
+CREATE TABLE public.j_observation_values_tables (
+    id_observations integer NOT NULL,
+    id_values_tables character varying(50) NOT NULL,
+    id_prefix character varying(3) NOT NULL,
+    id_units integer NOT NULL,
+    id_chemical_entities character varying(80) NOT NULL,
+    quantitykind character varying(50) NOT NULL,
+    min_value double precision NULL,
+    max_value double precision NULL,
+    moy_value double precision NULL,
+    start_time timestamp NULL,
+    end_time timestamp NULL,
+    CONSTRAINT j_observation_values_tables_t_unit_units_fk FOREIGN KEY (id_units) REFERENCES t_unit_units(id),
+    CONSTRAINT j_observation_values_tables_t_chimical_entities_fk FOREIGN KEY (id_chemical_entities) REFERENCES t_chimical_entities(name)
+    );
+
+    CREATE TABLE public.j_observation_documents (
+    id_observations integer NOT NULL,
+    id_document integer NOT NULL,
+    CONSTRAINT j_observation_documents_t_observations_fk FOREIGN KEY (id_observations) REFERENCES t_observations(id)
+    );

@@ -12,7 +12,7 @@ CREATE TABLE public.t_observations (
     id_cave int4,
     id_entrance int4,
     id_point int4,
-    id_observation-type int4
+    id_observation_type int4
 );
 
 ALTER TABLE ONLY public.t_observations
