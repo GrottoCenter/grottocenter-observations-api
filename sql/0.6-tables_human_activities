@@ -1,0 +1,55 @@
+\c grottoobs;
+
+CREATE TABLE public.t_human_activities_types (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    definition text,
+    url character varying(100)
+    );
+    ALTER TABLE ONLY public.t_human_activities_types
+    ADD CONSTRAINT t_human_activities_types_pkey PRIMARY KEY (id);
+
+
+
+INSERT INTO public.t_human_activities_types (id, name, definition, url) VALUES
+(1,'guided tourist cave','Use of the underground cavity to allow tourists to visit it','https://ontology.uis-speleo.org/ontology/#guidedTouristCave'),
+(2,'waste disposal','Use of the underground cavity as a rubbish dump','https://ontology.uis-speleo.org/ontology/#wasteDisposal'),
+(3,'road drain','Use of the underground cavity to collect water coming from a road','https://ontology.uis-speleo.org/ontology/#roadDrain'),
+(4,'storage','Using the underground cavity to store something','https://ontology.uis-speleo.org/ontology/#storage'),
+(5,'habitation','Use of the underground cavity as a dwelling','https://ontology.uis-speleo.org/ontology/#habitation'),
+(6,'livestock shelter','Use of the underground cavity as a livestock shelter','https://ontology.uis-speleo.org/ontology/#livestockShelter'),
+(7,'food source','Use of the underground cavity as a source food','https://ontology.uis-speleo.org/ontology/#foodSource'),
+(8,'water source','Use of the underground cavity as a water source','https://ontology.uis-speleo.org/ontology/#waterSource'),
+(9,'guano mining','Using the underground cavity to harvest guano','https://ontology.uis-speleo.org/ontology/#guanoMining'),
+(10,'mine','Using the underground cavity as a mine','https://ontology.uis-speleo.org/ontology/#mine'),
+(11,'human burial site','Using the underground cavity as a human burial site','https://ontology.uis-speleo.org/ontology/#humanBurialSite'),
+(12,'sacred site','Using the underground cavity as a sacred site in which no religious rites are performed','https://ontology.uis-speleo.org/ontology/#sacredSite'),
+(13,'temple','Use of the underground cavity to practice religious rites','https://ontology.uis-speleo.org/ontology/#temple'),
+(14,'place of a legend','Underground cavity associated with a legend','https://ontology.uis-speleo.org/ontology/#placeOfALegend'),
+(15,'scientific activity','Use of the underground cavity to practice scientific activities','https://ontology.uis-speleo.org/ontology/#scientificActivity'),
+(16,'place of manufacture','Use of the underground cavity to develop a product','https://ontology.uis-speleo.org/ontology/#placeOfManufacture'),
+(17,'traffic way','Use of the underground cavity to circulate, to move','https://ontology.uis-speleo.org/ontology/#trafficWay');
+
+
+CREATE TABLE public.t_human_activities (
+    id serial NOT NULL,
+    title character varying(100) NOT NULL,
+    description varchar(2000) NULL,
+    is_deleted bool NOT NULL DEFAULT false,
+	redirect_to int4 NULL,
+    id_human_activities_types integer NOT NULL,
+    relevance int2 NOT NULL,
+	CONSTRAINT t_human_activities_pkey PRIMARY KEY (id),
+	CONSTRAINT t_human_activities_types_t_human_activities_fk FOREIGN KEY (id_human_activities_types) REFERENCES t_human_activities_types(id)
+     );
+
+CREATE TABLE public.h_human_activities (
+    id serial NOT NULL,
+    title character varying(100) NOT NULL,
+    description varchar(2000) NULL,
+    id_human_activities_types integer NOT NULL,
+    relevance int2 NOT NULL,
+	CONSTRAINT h_human_activities_pkey PRIMARY KEY (id),
+	CONSTRAINT t_human_activities_types_h_human_activities_fk FOREIGN KEY (id_human_activities_types) REFERENCES t_human_activities_types(id)
+     );
+   
